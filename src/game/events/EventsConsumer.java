@@ -32,6 +32,9 @@ public class EventsConsumer {
             case OVER:
                 handleOver(event);
                 break;
+            case USER:
+                handleUser(event);
+                break;
             default:
                 break;
         }
@@ -39,17 +42,17 @@ public class EventsConsumer {
 
     static void handleMoveUp(Event event){
         int player = Integer.parseInt(event.data.get(EventData.PLAYER));
-        GameLoop.players[player].moveUp();
+        GameLoop.getPlayer(player).moveUp();
     }
 
     static void handleMoveDown(Event event){
         int player = Integer.parseInt(event.data.get(EventData.PLAYER));
-        GameLoop.players[player].moveDown();
+        GameLoop.getPlayer(player).moveDown();
     }
 
     static void handleFire(Event event){
         int player = Integer.parseInt(event.data.get(EventData.PLAYER));
-        GameLoop.players[player].fire();
+        GameLoop.getPlayer(player).fire();
     }
 
     static void handleToStart(Event event){
@@ -64,5 +67,11 @@ public class EventsConsumer {
         int winner = Integer.parseInt(event.data.get(EventData.WINNER));
         GameLoop.state.winner = winner;
         GameLoop.state.state = GameStates.OVER;
+    }
+
+    static void handleUser(Event event){
+        int id = Integer.parseInt(event.data.get(EventData.ID));
+        int lives = Integer.parseInt(event.data.get(EventData.LIVES));
+        GameLoop.getPlayer(id).lives = lives;
     }
 }

@@ -6,5 +6,6 @@ public enum EventTypes {
     FIRE,
     TO_START,
     STARTED,
-    OVER
+    OVER,
+    USER
 }
