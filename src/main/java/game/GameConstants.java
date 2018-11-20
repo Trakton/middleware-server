@@ -20,6 +20,6 @@ public class GameConstants {
     static public final int BULLET_SPEED = 400;
 
     //Resources
-    static public final String PLAYER_SPRITE = "src/resources/player.png";
-    static public final String BULLET_SPRITE = "src/resources/bullet.png";
+    static public final String PLAYER_SPRITE = "src/main/resources/player.png";
+    static public final String BULLET_SPRITE = "src/main/resources/bullet.png";
 }
