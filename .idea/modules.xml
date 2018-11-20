@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/middleware-server.iml" filepath="$PROJECT_DIR$/middleware-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/middleware-server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/middleware-server_main.iml" group="middleware-server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/middleware-server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/middleware-server_test.iml" group="middleware-server" />
     </modules>
   </component>
 </project>

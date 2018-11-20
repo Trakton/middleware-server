@@ -1,0 +1,19 @@
+# Intellij
+.idea/
+*.iml
+
+# Gradle
+build/
+.gradle/
+gradle.properties
+
+# Idea Plugin
+out/
+
+# Logback
+log/
+
+# Kubernetes Credentials
+*/credentials
+*secret.yml
+*kubeconfig.yaml
