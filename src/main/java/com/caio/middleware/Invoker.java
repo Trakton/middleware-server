@@ -23,7 +23,8 @@ public class Invoker implements Closeable {
   private final MiddlewareState state;
   private final Map<Integer, Topic> topicMap;
   private final ClientRequestHandler crh;
-  private ConcurrentMap<Integer, BlockingQueue<ByteString>> queueMap = new ConcurrentHashMap<>();
+  private ConcurrentMap<Integer, BlockingQueue<ByteString>> queueMap =
+      new ConcurrentHashMap<>();
   private final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
   private final Marshaller marshaller;
   private Thread receiver;
@@ -37,8 +38,7 @@ public class Invoker implements Closeable {
             .stream()
             .map((key) -> Pair.of(key, new ArrayBlockingQueue<ByteString>(5)))
             .collect(Collectors.toMap(Pair::getKey, Pair::getValue)));
-    this.processingQueue =
-        new ArrayBlockingQueue<Integer>(topicMap.size(), true, topicMap.keySet());
+    this.processingQueue = new ArrayBlockingQueue<Integer>(topicMap.size(), true, topicMap.keySet());
     receiver = new Thread(this::receiver);
     receiver.start();
     caller = new Thread(this::caller);
@@ -53,9 +53,9 @@ public class Invoker implements Closeable {
 
         final BlockingQueue<ByteString> queue = queueMap.get(incomingEvent.getTopicId());
 
-        queue.add(incomingEvent.getPayload());
-      } catch (IOException e) {
-        throw new RuntimeException(e);
+        queue.put(incomingEvent.getPayload());
+      } catch (IOException | InterruptedException e) {
+        if(!state.isStopped()) throw new RuntimeException(e);
       }
     }
   }
@@ -66,7 +66,7 @@ public class Invoker implements Closeable {
         final Integer topicId = processingQueue.take();
         executor.submit(() -> this.process(topicId, queueMap.get(topicId)));
       } catch (InterruptedException e) {
-        throw new RuntimeException(e);
+        if(!state.isStopped()) throw new RuntimeException(e);
       }
     }
   }
@@ -74,14 +74,15 @@ public class Invoker implements Closeable {
   private void process(int topicId, BlockingQueue<ByteString> queue) {
     try {
       Topic topic = topicMap.get(topicId);
-      topic.process(queue.take());
-    } catch (InvalidProtocolBufferException | InterruptedException e) {
+      final ByteString message = queue.poll();
+      topic.process(message);
+    } catch (InvalidProtocolBufferException e){
       throw new RuntimeException(e);
     } finally {
       try {
         processingQueue.put(topicId);
       } catch (InterruptedException e) {
-        throw new RuntimeException(e);
+        if(!state.isStopped()) throw new RuntimeException(e);
       }
     }
   }

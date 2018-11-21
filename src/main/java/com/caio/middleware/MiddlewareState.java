@@ -18,18 +18,22 @@ public class MiddlewareState {
     return State.CREATING.equals(this.state.get());
   }
 
+  boolean isStopped() {
+    return State.STOPPED.equals(this.state.get());
+  }
+
   void start() throws MiddlewareException {
     if (!State.CREATING.equals(this.state.get())) throw new MiddlewareException();
     this.state.set(State.STARTED);
   }
 
   void stop() {
-    this.state.set(State.STOPED);
+    this.state.set(State.STOPPED);
   }
 
   private enum State {
     CREATING,
     STARTED,
-    STOPED
+    STOPPED
   }
 }
