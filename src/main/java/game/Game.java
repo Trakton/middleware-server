@@ -18,7 +18,10 @@ public class Game {
 
   public static void main(String[] args) throws IOException, MiddlewareException {
 
-    proxy = new MiddlewareProxy("localhost", 8080, 1);
+    final String host = System.getenv("MIDDLEWARE_HOST");
+    final String port = System.getenv("MIDDLEWARE_PORT");
+
+    proxy = new MiddlewareProxy(host, Integer.parseInt(port), 1);
     proxy.createTopic(GameConstants.SIGN_IN_TOPIC, SignIn.parser()).onMessage(new SignInCallable());
     proxy.createTopic(GameConstants.MOVE_TOPIC, Move.parser()).onMessage(new MoveCallable());
     proxy.createTopic(GameConstants.FIRE_TOPIC, Fire.parser()).onMessage(new FireCallable());
