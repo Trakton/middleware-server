@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package com.caio.middleware.proto;
+option java_outer_classname = "GameProtocol";
+option java_multiple_files = true;
+
+
+message Fire {
+  int32 player = 1;
+}
+
+message GameStatus {
+
+  enum State {
+    TO_START = 0;
+    STARTED = 1;
+    OVER = 2;
+  }
+
+  int32 winner = 1;
+  int32 player_one = 2;
+  int32 player_two = 3;
+  State state = 4;
+}
+
+
+message Move {
+
+  enum Direction {
+    UP = 0;
+    DOWN = 1;
+  }
+
+  int32 player = 1;
+  Direction direction = 2;
+}
+
+
+message User {
+  int32 player = 1;
+  int32 lives = 2;
+}
+
+message SignIn {
+  int32 player = 1;
+}

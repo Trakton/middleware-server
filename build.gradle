@@ -52,6 +52,8 @@ sourceSets {
         proto {
             srcDirs {
                 file("protocols/proto")
+                file("game_protocols/proto")
+
             }
         }
     }
