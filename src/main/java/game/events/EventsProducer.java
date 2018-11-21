@@ -39,7 +39,9 @@ public class EventsProducer {
     GameLoop.events.add(event);
 
     // Midleware connection
-    GameStatus message = GameStatus.newBuilder().setState(GameStatus.State.TO_START).build();
+    GameStatus message = GameStatus.newBuilder().setState(GameStatus.State.TO_START)
+            .setPlayerOne(Game.playerOneID)
+            .setPlayerTwo(Game.playerTwoID).build();
     Game.proxy.getTopic(GameConstants.GAME_STATUS_TOPIC).produce(message);
   }
 
@@ -52,8 +54,6 @@ public class EventsProducer {
     GameStatus message =
         GameStatus.newBuilder()
             .setState(GameStatus.State.STARTED)
-            .setPlayerOne(Game.playerOneID)
-            .setPlayerTwo(Game.playerTwoID)
             .build();
     Game.proxy.getTopic(GameConstants.GAME_STATUS_TOPIC).produce(message);
   }
