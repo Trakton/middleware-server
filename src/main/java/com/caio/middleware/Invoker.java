@@ -1,7 +1,6 @@
 package com.caio.middleware;
 
 import com.caio.middleware.handler.ClientRequestHandler;
-import com.caio.middleware.proto.GameProtocol;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.mid_player.EventStreaming;
@@ -24,8 +23,7 @@ public class Invoker implements Closeable {
   private final MiddlewareState state;
   private final Map<Integer, Topic> topicMap;
   private final ClientRequestHandler crh;
-  private ConcurrentMap<Integer, BlockingQueue<ByteString>> queueMap =
-      new ConcurrentHashMap<>();
+  private ConcurrentMap<Integer, BlockingQueue<ByteString>> queueMap = new ConcurrentHashMap<>();
   private final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
   private final Marshaller marshaller;
   private Thread receiver;
@@ -39,7 +37,8 @@ public class Invoker implements Closeable {
             .stream()
             .map((key) -> Pair.of(key, new ArrayBlockingQueue<ByteString>(5)))
             .collect(Collectors.toMap(Pair::getKey, Pair::getValue)));
-    this.processingQueue = new ArrayBlockingQueue<Integer>(topicMap.size(), true, topicMap.keySet());
+    this.processingQueue =
+        new ArrayBlockingQueue<Integer>(topicMap.size(), true, topicMap.keySet());
     receiver = new Thread(this::receiver);
     receiver.start();
     caller = new Thread(this::caller);

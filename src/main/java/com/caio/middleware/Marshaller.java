@@ -2,11 +2,8 @@ package com.caio.middleware;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
-import com.google.protobuf.Parser;
 import io.mid_player.EventStreaming;
-import io.mid_player.EventSubscription;
 import io.mid_player.EventSubscriptionResponse;
-import java.io.IOException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
