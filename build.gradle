@@ -48,5 +48,5 @@ docker {
         baseImage = 'openjdk:8-alpine'
     }
     group = 'divinomenezes'
-    version = '0.0.1'
+    version = '0.0.2'
 }
