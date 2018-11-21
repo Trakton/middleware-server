@@ -64,18 +64,18 @@ public class Invoker implements Closeable {
     while (state.isStarted()) {
       try {
         final Integer topicId = processingQueue.take();
-        executor.submit(() -> this.process(topicId, queueMap.get(topicId)));
+        executor.submit(() -> this.process(topicId, queueMap.get(topicId).poll()));
       } catch (InterruptedException e) {
         if(!state.isStopped()) throw new RuntimeException(e);
       }
     }
   }
 
-  private void process(int topicId, BlockingQueue<ByteString> queue) {
+  private void process(int topicId, ByteString message) {
     try {
       Topic topic = topicMap.get(topicId);
-      final ByteString message = queue.poll();
-      topic.process(message);
+
+      if(message != null) topic.process(message);
     } catch (InvalidProtocolBufferException e){
       throw new RuntimeException(e);
     } finally {
