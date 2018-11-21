@@ -19,7 +19,7 @@ public class MiddlewareState {
   }
 
   void start() throws MiddlewareException {
-    if (!State.CREATING.equals(this.state)) throw new MiddlewareException();
+    if (!State.CREATING.equals(this.state.get())) throw new MiddlewareException();
     this.state.set(State.STARTED);
   }
 

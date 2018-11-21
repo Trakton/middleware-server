@@ -50,11 +50,8 @@ dependencies {
 sourceSets {
     main {
         proto {
-            srcDirs {
-                file("protocols/proto")
-                file("game_protocols/proto")
-
-            }
+            srcDirs "protocols/proto"
+            srcDirs "game_protocols/proto"
         }
     }
 }

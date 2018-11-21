@@ -4,11 +4,9 @@ import com.caio.middleware.MiddlewareException;
 import game.GameConstants;
 import game.GameLoop;
 import game.events.EventsProducer;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
 public class Player extends Sprite {
 

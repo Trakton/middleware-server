@@ -5,7 +5,6 @@ import game.entities.Player;
 import game.entities.events.Event;
 import game.events.EventsConsumer;
 import game.events.EventsProducer;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
